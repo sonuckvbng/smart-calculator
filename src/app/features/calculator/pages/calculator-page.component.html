@@ -1,0 +1,142 @@
+<section class="content-grid">
+  <mat-card class="calculator-card">
+
+    <div class="card-heading">
+      <div>
+        <span class="section-kicker">
+          {{ preferences.mode() === 'kids' ? 'YOUR MATH SPACE' : 'CALCULATOR' }}
+        </span>
+
+        <h2>
+          {{ preferences.mode() === 'kids' ? 'Let’s calculate!' : 'Calculator' }}
+        </h2>
+      </div>
+
+      <button class="text-button" type="button" (click)="clear()">
+        Clear all
+      </button>
+    </div>
+
+    <div class="display" [class.error]="error" aria-live="polite">
+      <div class="expression">
+        {{ expression || 'Ready when you are' }}
+      </div>
+
+      <div class="result">
+        {{ error || result || '0' }}
+      </div>
+    </div>
+
+    <div class="keypad" aria-label="Calculator keypad">
+
+      <!-- First row -->
+      <button class="key function" type="button" (click)="append('(')">(</button>
+      <button class="key function" type="button" (click)="append(')')">)</button>
+      <button class="key function" type="button" (click)="backspace()" aria-label="Backspace">⌫</button>
+      <button class="key danger" type="button" (click)="clear()">AC</button>
+
+      <!-- Second row -->
+      <button class="key" type="button" (click)="append('7')">7</button>
+      <button class="key" type="button" (click)="append('8')">8</button>
+      <button class="key" type="button" (click)="append('9')">9</button>
+      <button class="key operator" type="button" (click)="append('/')">÷</button>
+
+      <!-- Third row -->
+      <button class="key" type="button" (click)="append('4')">4</button>
+      <button class="key" type="button" (click)="append('5')">5</button>
+      <button class="key" type="button" (click)="append('6')">6</button>
+      <button class="key operator" type="button" (click)="append('*')">×</button>
+
+      <!-- Fourth row -->
+      <button class="key" type="button" (click)="append('1')">1</button>
+      <button class="key" type="button" (click)="append('2')">2</button>
+      <button class="key" type="button" (click)="append('3')">3</button>
+      <button class="key operator" type="button" (click)="append('-')">−</button>
+
+      <!-- Fifth row -->
+      <button class="key function" type="button" (click)="append('%')">%</button>
+      <button class="key" type="button" (click)="append('0')">0</button>
+      <button class="key" type="button" (click)="append('.')">.</button>
+      <button class="key operator" type="button" (click)="append('+')">+</button>
+
+      <!-- Scientific functions -->
+      <button class="key scientific" type="button" (click)="append('sqrt(')">√</button>
+      <button class="key scientific" type="button" (click)="append('sin(')">sin</button>
+      <button class="key scientific" type="button" (click)="append('cos(')">cos</button>
+
+      <button
+        class="key equals"
+        type="button"
+        (click)="calculate()"
+        [disabled]="isCalculating"
+      >
+        {{ isCalculating ? '…' : '=' }}
+      </button>
+    </div>
+
+    <div class="calc-footer">
+      <span>↵ Press Enter to calculate</span>
+
+      <button type="button" (click)="copyResult()">
+        Copy result ↗
+      </button>
+    </div>
+
+  </mat-card>
+
+  <aside class="side-column">
+
+    <!-- Tip card -->
+    <mat-card class="tip-card">
+      <div class="tip-icon">✦</div>
+
+      <span class="section-kicker">
+        {{ preferences.mode() === 'kids' ? 'A LITTLE TIP' : 'QUICK TIP' }}
+      </span>
+
+      <h3>
+        {{ preferences.mode() === 'kids'
+          ? 'You’ve got this!'
+          : 'Think beyond the basics.' }}
+      </h3>
+
+      <p>
+        {{ preferences.mode() === 'kids'
+          ? 'Try a multiplication challenge in Math Games and collect your stars.'
+          : 'Try functions like sqrt(81), sin(1), or use parentheses to group calculations.' }}
+      </p>
+
+      <a class="outline-button" routerLink="/games">
+        {{ preferences.mode() === 'kids'
+          ? 'Play a math game'
+          : 'Try a challenge' }}
+        <span>→</span>
+      </a>
+    </mat-card>
+
+    <!-- Recent activity -->
+    <mat-card class="mini-card">
+      <div class="mini-top">
+        <span>◷</span>
+        <span class="section-kicker">RECENT ACTIVITY</span>
+      </div>
+
+      <div *ngIf="recent().length === 0" class="empty">
+        Your latest calculations will show up here.
+      </div>
+
+      <div
+        class="recent-row"
+        *ngFor="let item of recent().slice(0, 3)"
+      >
+        <span>{{ item.expression }}</span>
+        <strong>{{ item.result }}</strong>
+      </div>
+
+      <a class="text-button link-button" routerLink="/history">
+        View history →
+      </a>
+    </mat-card>
+
+  </aside>
+</section>

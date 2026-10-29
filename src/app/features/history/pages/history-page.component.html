@@ -1,0 +1,5 @@
+<section class="history-panel"><mat-card><div class="card-heading"><div><span class="section-kicker">YOUR WORKSPACE</span><h2>Calculation history</h2></div><button class="text-button" type="button" (click)="clearHistory()" [disabled]="history().length === 0">Clear history</button></div>
+  <p *ngIf="error()" class="error-text" role="alert">{{ error() }}</p><p *ngIf="loading()" class="empty">Loading your calculations…</p>
+  <div *ngIf="!loading() && history().length === 0" class="empty large">No saved calculations yet. Calculate something to get started.</div>
+  <div class="history-row" *ngFor="let item of history()"><div><span>{{ item.expression }}</span><small>{{ item.createdAt ? (item.createdAt | date:'medium') : 'Saved calculation' }}</small></div><strong>{{ item.result }}</strong><button class="icon-button" type="button" (click)="deleteHistory(item.id)" aria-label="Delete history item">×</button></div>
+</mat-card></section>

@@ -1,0 +1,22 @@
+<main class="app-shell" [class.kids]="preferences.mode() === 'kids'">
+  <header class="topbar">
+    <a class="brand" routerLink="/calculator" aria-label="CalcPlay home">
+      <span class="brand-mark" aria-hidden="true">✳</span><span>calc<span class="brand-accent">play</span><small>SMART CALCULATOR PLAYGROUND</small></span>
+    </a>
+    <div class="mode-switch"><span>🧸 Kids</span><mat-slide-toggle [checked]="preferences.mode() === 'kids'" (change)="setMode($event)" aria-label="Switch Kids Mode"></mat-slide-toggle><span>◉ Adult</span></div>
+  </header>
+  <section class="hero">
+    <div><div class="eyebrow">{{ preferences.mode() === 'kids' ? 'LEARN • PLAY • GROW' : 'YOUR EVERYDAY THINKING TOOL' }}</div>
+      <h1>{{ preferences.mode() === 'kids' ? 'Math can be magical.' : 'Make numbers make sense.' }}</h1>
+      <p>{{ preferences.mode() === 'kids' ? 'Little steps, big discoveries. Let’s make today a great math day!' : 'A thoughtful calculator for quick answers, scientific work and everyday productivity.' }}</p>
+    </div>
+    <div class="hero-art" aria-hidden="true"><span class="orb orb-one">＋</span><span class="orb orb-two">×</span><span class="orb orb-three">÷</span><div class="art-card">123<span>✓</span></div></div>
+  </section>
+  <nav class="tabs" aria-label="Main navigation">
+    <a routerLink="/calculator" routerLinkActive="active" ariaCurrentWhenActive="page">⌗ Calculator</a>
+    <a routerLink="/games" routerLinkActive="active" ariaCurrentWhenActive="page">✦ Math games</a>
+    <a routerLink="/history" routerLinkActive="active" ariaCurrentWhenActive="page">◷ History</a>
+  </nav>
+  <router-outlet />
+  <footer><span>✳ CalcPlay</span><span>Made for curious minds, big and small.</span><span>Private by default · No account needed</span></footer>
+</main>
